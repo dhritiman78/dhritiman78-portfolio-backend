@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+require('dotenv').config();
 
-const URI = 'mongodb://localhost:27017/dhritimanportfolio'
+const mongoose = require('mongoose');
+const URI = process.env.EXPRESS_MONGO_DB_URI
 
 // Connect to the database
 const connectDB = async () => {
