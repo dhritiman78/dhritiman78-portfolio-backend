@@ -1,8 +1,8 @@
 const connectDB = require('../db');
 const skillsmodel = require('../models/skillsmodel');
 
-let weblink = "http://localhost:3000/assets/weblangicons/";
-let OtherLink = "http://localhost:3000/assets/android_and_coding_and_tools_icons/";
+let weblink = process.env.EXPRESS_BACKEND_URL+"/assets/weblangicons/";
+let OtherLink = process.env.EXPRESS_BACKEND_URL+"/assets/android_and_coding_and_tools_icons/";
 
 async function func_web_skills() {
     try {
