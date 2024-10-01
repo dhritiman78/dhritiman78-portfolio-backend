@@ -23,7 +23,7 @@ app.use(cors({
 }));
 // Handling preflight requests
 app.options('/api/contact', (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+    res.setHeader('Access-Control-Allow-Origin', process.env.EXPRESS_FRONTEND_URL);
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.send();
