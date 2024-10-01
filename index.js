@@ -3,11 +3,10 @@ const app = express();
 const port = 3000;
 const cors = require('cors');
 const connectDB = require('./db');
-const skillsdata = require('./fetched_data_from_db/skills');
-const projectsdata = require('./fetched_data_from_db/projects');
-const contact_data = require('./entry_into_db/contact_requests');
-const get_contact_data = require('./fetched_data_from_db/contacts_data');
-const contactReqModel = require('./models/contactRequestsModel');
+const skillsRouter = require('./routes/skillsRoute');
+const projectRouter = require('./routes/projectRoute');
+const contactRouter = require('./routes/contactRoute');
+const authenticationRouter = require('./routes/authenticationRoute');
 
 // I want to allow my images from aseets weblangicons to be accessed by the client
 app.use(express.static('assets/weblangicons'));
@@ -30,49 +29,10 @@ app.options('/api/contact', (req, res) => {
     res.send();
 });
 
-app.get('/webskills',async (req, res) => {
-    let web_skills = await skillsdata.func_web_skills();
-    res.send(web_skills);
-});
-app.get('/androidskills',async (req, res) => {
-    let and_skills = await skillsdata.func_Android_skills();
-    res.send(and_skills);
-});
-app.get('/codingskills',async (req, res) => {
-    let coding_skills = await skillsdata.func_coding_skills();
-    res.send(coding_skills);
-});
-app.get('/toolskills',async (req, res) => {
-    let tools_skills = await skillsdata.func_tools_skills();
-    res.send(tools_skills);
-});
-
-app.get('/projects', async (req, res) => {
-    let projects = await projectsdata.func_projects_in_site();
-    res.send(projects);
-});
-
-app.post('/api/contact', async (req, res) => {
-    try {
-      let result = await contact_data(req.body);
-      console.log(result);
-      res.send(result);
-    } catch (error) {
-      res.status(500).send(result);
-    }
-  });
-app.get('/api/contact-requests', async (req, res) => {
-    let contacts = await get_contact_data.contact_req();
-    res.send(contacts);
-});
-app.delete('/api/contact-requests/:id', async (req, res) => {
-    try {
-        await contactReqModel.findByIdAndDelete(req.params.id);
-        res.status(204).send();
-    } catch (error) {
-        res.status(500).send();
-    }
-});
+app.use('/api/skills', skillsRouter);
+app.use('/api/projects', projectRouter);
+app.use('/api/contact', contactRouter);
+app.use('/api/auth',authenticationRouter);
 
 app.get('/assets/:dirr/:slug', (req, res) => {
     res.sendFile(__dirname + `/assets/${req.params.dirr}/${req.params.slug}`);
