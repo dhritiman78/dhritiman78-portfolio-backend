@@ -17,7 +17,7 @@ app.use(express.json()); // Ensures the request body is parsed as JSON
 
 // Tackling the CORS
 app.use(cors({
-    origin: 'http://localhost:5173', // Update this to match your actual frontend domain
+    origin: process.env.EXPRESS_FRONTEND_URL, // Update this to match your actual frontend domain
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
